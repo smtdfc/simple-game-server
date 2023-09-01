@@ -15,7 +15,8 @@ sockserver.on('connection', ws => {
   states[ws.key] = {}
 
   sendData(ws, {
-    type: "connected"
+    type: "connected",
+    key:ws.key
   })
 
   sockserver.clients.forEach(client => {
@@ -25,7 +26,7 @@ sockserver.on('connection', ws => {
         id: client.key,
         states: states[client.key]
       })
-    } else {
+      
       sendData(client, {
         type: "opponent_joined",
         id: ws.key,
