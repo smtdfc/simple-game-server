@@ -26,6 +26,7 @@
     "rimraf": "^5.0.0"
   },
   "dependencies": {
+    "ws":"^8.13.0",
     "@colyseus/tools": "^0.15.0",
     "@colyseus/monitor": "^0.15.0",
     "@colyseus/playground": "^0.15.3",

@@ -1,32 +1,19 @@
-const colyseus = require("colyseus");
+import { createServer } from 'https';
+import { readFileSync } from 'fs';
+import { WebSocketServer } from 'ws';
 
-const gameServer = new colyseus.Server({
+const server = createServer({
+  });
+const wss = new WebSocketServer({ server });
+
+wss.on('connection', function connection(ws) {
+  ws.on('error', console.error);
+
+  ws.on('message', function message(data) {
+    console.log('received: %s', data);
+  });
+
+  ws.send('something');
 });
-class MyRoom extends colyseus.Room {
-    // When room is initialized
-    onCreate (options) { }
 
-    // Authorize client based on provided options before WebSocket handshake is complete
-    onAuth (client, options, request) { }
-
-    // When client successfully join the room
-    onJoin (client, options, auth) { }
-
-    // When a client leaves the room
-    onLeave (client, consented) { }
-
-    // Cleanup callback, called after there are no more clients in the room. (see `autoDispose`)
-    onDispose () { }
-}
-// Server-side
-gameServer.define("my_room", MyRoom, {
-  map: "cs_assault"
-})
-
-// onCreate() - options are:
-// {
-//   name: "Jake",
-//   map: "cs_assault"
-// }
-
-gameServer.listen(3000)
+server.listen(8080);
