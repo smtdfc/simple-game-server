@@ -1,5 +1,5 @@
 const { WebSocketServer } = require('ws')
-const sockserver = new WebSocketServer({ port: 443 })
+const sockserver = new WebSocketServer({ port: 3000 })
 
 function generateKey() {
   return (Math.floor(Math.random() * 9999) * Date.now()).toString(16)
@@ -46,7 +46,18 @@ sockserver.on('connection', ws => {
       sockserver.clients.forEach(client => {
         if (client !== ws) sendData(client, {
           type: "opponent_moved",
-          info: data.pos
+          info: data.info,
+          id:ws.key
+        })
+      })
+    }
+    
+    if (data.type == "idle") {
+      sockserver.clients.forEach(client => {
+        if (client !== ws) sendData(client, {
+          type: "opponent_idled",
+          info: data.info,
+          id: ws.key
         })
       })
     }
