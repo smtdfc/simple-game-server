@@ -6,7 +6,7 @@ sockserver.on('connection', ws => {
   ws.on('close', () => console.log('Client has disconnected!'))
   ws.on('message', data => {
     sockserver.clients.forEach(client => {
-      client.send(data)
+      if (client !== ws) client.send(data);
     })
   })
   ws.onerror = function () {
