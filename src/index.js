@@ -25,6 +25,12 @@ sockserver.on('connection', ws => {
         id: client.key,
         states: states[client.key]
       })
+    } else {
+      sendData(client, {
+        type: "opponent_joined",
+        id: ws.key,
+        states: states[ws.key]
+      })
     }
   })
 
@@ -38,8 +44,8 @@ sockserver.on('connection', ws => {
     if (data.type == "move") {
       sockserver.clients.forEach(client => {
         if (client !== ws) sendData(client, {
-          type:"opponent_moved",
-          info:data.pos
+          type: "opponent_moved",
+          info: data.pos
         })
       })
     }
