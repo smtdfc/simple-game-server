@@ -80,6 +80,18 @@ sockserver.on('connection', ws => {
 
       })
     }
+    
+    if (data.type == "defeated") {
+      sockserver.clients.forEach(client => {
+    
+       sendData(client, {
+          type: "opponent_slained",
+          info: data.info,
+          attacker: ws.key
+        })
+    
+      })
+    }
   })
 
   ws.onerror = function() {
