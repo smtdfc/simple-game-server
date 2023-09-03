@@ -71,6 +71,17 @@ sockserver.on('connection', ws => {
         })
       }
     }
+    
+    if (data.type == "attack") {
+      for (let i = 0; i < sockserver.clients.length; i++) {
+        let client = sockserver.clients[i]
+        if (client !== ws) sendData(client, {
+          type: "opponent_attacked",
+          info: data.info,
+          id: ws.key
+        })
+      }
+    }
   })
 
   ws.onerror = function() {
