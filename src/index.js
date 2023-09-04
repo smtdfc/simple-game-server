@@ -29,7 +29,8 @@ sockserver.on('connection', ws => {
 
   sendData(ws, {
     type: "connected",
-    key: ws.key
+    key: ws.key,
+    states:states[ws.key]
   })
 
   sockserver.clients.forEach(client => {
